@@ -1,0 +1,9 @@
+test.py
+*.sql
+*.txt
+*.json
+*.xlsx
+*.xls
+*.csv
+datetime_test.py
+*.pyc

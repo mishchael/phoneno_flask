@@ -7,7 +7,7 @@ import pymysql
 
 def db_insert(sql):
 	# 打开数据库连接
-	db = pymysql.connect(host = '127.0.0.1', user = 'root', password = 'nlcyzqzy.0', db = 'rzdb', port = 3306, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+	db = pymysql.connect(host = '127.0.0.1', user = 'root', password = 'root', db = 'rzdb', port = 3306, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
 	# 使用 cursor() 方法创建一个游标对象 cursor
 	cursor = db.cursor()
 	# 使用 execute()  方法执行 SQL 插入语句
@@ -32,7 +32,7 @@ def db_insert(sql):
 	'''
 def db_select(sql):
 	# 打开数据库连接
-	db = pymysql.connect(host = '127.0.0.1', user = 'root', password = 'nlcyzqzy.0', db = 'rzdb', port = 3306, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+	db = pymysql.connect(host = '127.0.0.1', user = 'root', password = 'root', db = 'rzdb', port = 3306, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
 	 
 	# 使用cursor()方法获取操作游标 
 	cursor = db.cursor()

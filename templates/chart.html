@@ -20,29 +20,23 @@
     <script src="static/js/theme/wonderland.js"></script>
     <script src="static/js/bootstrap-select.min.js"></script>
     <script src="static/js/defaults-zh_CN.js"></script>
-
     <script type="text/javascript" src="static/js/vendor/mmenu/js/jquery.mmenu.min.js"></script>
     <script type="text/javascript" src="static/js/vendor/sparkline/jquery.sparkline.min.js"></script>
     <script type="text/javascript" src="static/js/vendor/nicescroll/jquery.nicescroll.min.js"></script>
     <!-- <script type="text/javascript" src="static/js/vendor/animate-numbers/jquery.animateNumbers.js"></script> -->
     <!-- <script type="text/javascript" src="static/js/vendor/videobackground/jquery.videobackground.js"></script> -->
     <!-- <script type="text/javascript" src="static/js/vendor/blockui/jquery.blockUI.js"></script> -->
-
     <!-- <script src="static/js/vendor/flot/jquery.flot.min.js"></script> -->
     <!-- <script src="static/js/vendor/flot/jquery.flot.categories.min.js"></script> -->
     <!-- <script src="static/js/vendor/flot/jquery.flot.pie.min.js"></script> -->
     <!-- <script src="static/js/vendor/flot/jquery.flot.stack.min.js"></script> -->
     <!-- <script src="static/js/vendor/graphtable/jquery.graphTable-0.3.js"></script> -->
     <!-- <script src="static/js/vendor/flot/jquery.flot.tooltip.min.js"></script> -->
-
     <!-- <script src="static/js/vendor/rickshaw/raphael-min.js"></script>  -->
     <!-- <script src="static/js/vendor/rickshaw/d3.v2.js"></script> -->
     <!-- <script src="static/js/vendor/rickshaw/rickshaw.min.js"></script> -->
-
     <!-- <script src="static/js/vendor/morris/morris.min.js"></script> -->
-
     <!-- <script src="static/js/vendor/easypiechart/jquery.easypiechart.min.js"></script> -->
-
     <!-- <script src="static/js/vendor/justgage/justgage.js"></script> -->
 </head>
 
@@ -73,7 +67,7 @@
                     <section class="tile card">
                         <!-- tile header -->
                         <div class="tile-header card-body">
-                            <h2 class="card-title">区县总、尖、峰、平、谷电量</h2>
+                            <h2 class="card-title">各单位超5户共用一个手机号</h2>
                             <div class="controls">
                                 <a href="#" class="minimize"><i class="fa fa-chevron-down"></i></a>
                                 <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
@@ -126,7 +120,6 @@
                         <!-- /tile body -->
                     </section>
                 </div>
-                
             </div>
             <!-- ============================================================== -->
             <!-- End PAge Content -->
@@ -195,7 +188,6 @@
         <!-- ============================================================== -->
         <!-- footer -->
         <!-- ============================================================== -->
-        
         <!-- <footer class="footer" style="position: absolute;background-color: rgb(238, 245, 249);">
             © 2018 动态可视化 by 运监中心
         </footer> -->
@@ -204,20 +196,23 @@
     <!-- <div id="calendar_effectscatter" style="width:100%;height:400px;"></div> -->
     <!-- <div id="tree" style="width:100%;height:800px;"></div> -->
     <script type="text/javascript">
+    var dom_bar = $('#bar-chart').get(0);
+    var echarts_bar = echarts.init(dom_bar, 'walden');
+    var echarts_bar_option = {};
+    var bar_data_admin = {};
     $.get('/chart_bar_data', function(data) {
         /*optional stuff to do after success */
-        var dom_bar = $('#bar-chart').get(0)
-        var echarts_bar = echarts.init(dom_bar, 'walden')
-        option = {
+        bar_data_admin = data;
+        echarts_bar_option = {
             title: {
-                // text: '区县总、尖、峰、平、谷电量',
+                // text: '各单位超5户共用一个手机号',
                 subtext: '柱状图和折线图'
             },
             tooltip: {
                 trigger: 'axis'
             },
             legend: {
-                data: ['总电量', '尖电量', '峰电量', '平电量', '谷电量']
+                data: ['总数']
             },
             toolbox: {
                 show: true,
@@ -231,95 +226,63 @@
             calculable: true,
             xAxis: [{
                 type: 'category',
-                data: data.area
+                data: bar_data_admin.adminame
             }],
             yAxis: [{
                 type: 'value'
             }],
             series: [{
-                    name: '总电量',
-                    type: 'bar',
-                    data: data.pape,
-                    markPoint: {
-                        data: [
-                            { type: 'max', name: '最大值' },
-                            { type: 'min', name: '最小值' }
-                        ]
-                    },
-                    markLine: {
-                        data: [
-                            { type: 'average', name: '平均值' }
-                        ]
-                    }
+                name: '按单位统计',
+                type: 'bar',
+                data: bar_data_admin.count,
+                markPoint: {
+                    data: [
+                        { type: 'max', name: '最大值' },
+                        { type: 'min', name: '最小值' }
+                    ]
                 },
-                {
-                    name: '尖电量',
-                    type: 'bar',
-                    data: data.pape1,
-                    markPoint: {
-                        data: [
-                            { type: 'max', name: '最大值' },
-                            { type: 'min', name: '最小值' }
-                        ]
-                    },
-                    markLine: {
-                        data: [
-                            { type: 'average', name: '平均值' }
-                        ]
-                    }
-                },
-                {
-                    name: '峰电量',
-                    type: 'bar',
-                    data: data.pape2,
-                    markPoint: {
-                        data: [
-                            { type: 'max', name: '最大值' },
-                            { type: 'min', name: '最小值' }
-                        ]
-                    },
-                    markLine: {
-                        data: [
-                            { type: 'average', name: '平均值' }
-                        ]
-                    }
-                },
-                {
-                    name: '平电量',
-                    type: 'bar',
-                    data: data.pape3,
-                    markPoint: {
-                        data: [
-                            { type: 'max', name: '最大值' },
-                            { type: 'min', name: '最小值' }
-                        ]
-                    },
-                    markLine: {
-                        data: [
-                            { type: 'average', name: '平均值' }
-                        ]
-                    }
-                },
-                {
-                    name: '谷电量',
-                    type: 'bar',
-                    data: data.pape4,
-                    markPoint: {
-                        data: [
-                            { type: 'max', name: '最大值' },
-                            { type: 'min', name: '最小值' }
-                        ]
-                    },
-                    markLine: {
-                        data: [
-                            { type: 'average', name: '平均值' }
-                        ]
-                    }
+                markLine: {
+                    data: [
+                        { type: 'average', name: '平均值' }
+                    ]
                 }
-            ]
+            }]
         };
-        echarts_bar.setOption(option);
+        echarts_bar.setOption(echarts_bar_option);
 
+    });
+
+    echarts_bar.on('click', function(params) {
+        console.log(params.seriesType)
+        if (params.componentType == 'series') {
+            // 点击到了 series 上
+            if (params.seriesType == 'bar' || params.seriesType == 'line') {
+                // 点击到了 bar 上
+                //数据上钻和下钻切换
+                if (params.seriesName == '按单位统计') {
+                    $.post('/api/chart_bar_drilldown', { adminame: params.name }, function(data) {
+                        bar_data_org = data;
+                        option = echarts_bar.getOption();
+                        option['xAxis'][0].data = data.orgname;
+                        option['series'][0].data = data.count;
+                        option['series'][0].name = '按供电所统计';
+                        echarts_bar.setOption(option, true);
+                    });
+                }
+                if (params.seriesName == '按供电所统计') {
+                    // $.get('/chart_bar_data', function(data) {
+                    //     echarts_bar.setOption(echarts_bar_option, true);
+                    // });
+                    option = echarts_bar.getOption();
+                    option['xAxis'][0].data = bar_data_admin.adminame;
+                    option['series'][0].data = bar_data_admin.count;
+                    option['series'][0].name = '按单位统计';
+                    echarts_bar.setOption(option, true);
+                    // echarts_bar.setOption(echarts_bar_option, true);
+                }
+
+            }
+        }
     });
 
     $.get('/chart_cal_effectscatter_data', function(data) {

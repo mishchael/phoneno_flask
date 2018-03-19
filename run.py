@@ -250,32 +250,48 @@ def datatable():
 
 @app.route('/chart_bar_data', methods = ['GET'])
 def chart_bar_data():
-	sql = 'SELECT consarea,SUM(pape) as pape,SUM(pape1) as pape1,SUM(pape2) as pape2,SUM(pape3) as pape3,SUM(pape4) as pape4 FROM bus_ydcj_power_consumption GROUP BY consarea'
+	'''
+	select b.adminame,count(a.id) from bus_yxxt_phone_over5 a INNER JOIN bus_yxxt_org b on a.orgno = b.orgno GROUP BY b.admino
+	'''
+	sql = 'SELECT b.adminame AS adminame,count(a.id) AS count FROM bus_yxxt_phone_over5 a INNER JOIN bus_yxxt_org b ON a.orgno = b.orgno GROUP BY b.admino ORDER BY b.admino'
 	chart_data = dbhelper.db_select(sql)
 	return_data = {}
-	area_list = []
-	pape_list = []
-	pape1_list = []
-	pape2_list = []
-	pape3_list = []
-	pape4_list = []
+	adminame_list = []
+	count_list = []
+	
 	for row in chart_data:
-		area_list.append(row['consarea'])
-		pape_list.append(round(row['pape'], 2))
-		pape1_list.append(round(row['pape1'], 2))
-		pape2_list.append(round(row['pape2'], 2))
-		pape3_list.append(round(row['pape3'], 2))
-		pape4_list.append(round(row['pape4'], 2))
+		adminame_list.append(row['adminame'])
+		count_list.append(row['count'])
 
-	return_data['area'] = area_list
-	return_data['pape'] = pape_list
-	return_data['pape1'] = pape1_list
-	return_data['pape2'] = pape2_list
-	return_data['pape3'] = pape3_list
-	return_data['pape4'] = pape4_list
+	return_data['adminame'] = adminame_list
+	return_data['count'] = count_list
 
 	return_data = jsonify(return_data)
 	return return_data
+
+
+@app.route('/api/chart_bar_drilldown', methods = ['POST'])
+def chart_bar_drilldown():
+	'''
+	SELECT a.orgname AS orgname,count(a.id) AS count FROM bus_yxxt_phone_over5 a INNER JOIN bus_yxxt_org b ON a.orgno = b.orgno WHERE b.adminame = '莒县供电公司' GROUP BY a.orgname ORDER BY a.orgname
+	'''
+	adminame = request.form.get('adminame')
+	sql = 'SELECT a.orgname AS orgname,count(a.id) AS count FROM bus_yxxt_phone_over5 a INNER JOIN bus_yxxt_org b ON a.orgno = b.orgno WHERE b.adminame = "' + adminame + '" GROUP BY a.orgname ORDER BY a.orgname '
+	chart_data = dbhelper.db_select(sql)
+	return_data = {}
+	orgname_list = []
+	count_list = []
+	
+	for row in chart_data:
+		orgname_list.append(row['orgname'])
+		count_list.append(row['count'])
+
+	return_data['orgname'] = orgname_list
+	return_data['count'] = count_list
+
+	return_data = jsonify(return_data)
+	return return_data
+
 
 @app.route('/chart_cal_effectscatter_data')
 def chart_cal_effectscatter_data():
