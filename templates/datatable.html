@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>日用电量查询</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link href="" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="static/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="static/css/jquery.dataTables-v1.10.16.min.css">
+    <link rel="stylesheet" href="static/css/buttons.dataTables-v1.5.1.min.css">
+    <link rel="stylesheet" href="static/css/select2.min.css">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor">Tab</h3>
+                </div>
+                <div class="col-md-7 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item">Ui Element</li>
+                        <li class="breadcrumb-item active">Tab</li>
+                    </ol>
+                </div>
+                <div>
+                    <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
+                </div>
+            </div> -->
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-md-11" style="margin: auto;">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title" style="text-align: center;">专变用户日电量查询</h4>
+                            <!-- <h6 class="card-subtitle">配置cookie+爬虫+查询</h6> -->
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#query" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">查询</span></a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#crawl" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">爬虫</span></a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#cookies" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Cookies</span></a> </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content tabcontent-border">
+                                <div class="tab-pane active" id="query" role="tabpanel">
+                                    <div class="p-20">
+                                        <div id="select" style="width:100%;border: 1px solid #c8c9ca; padding: 5px;margin:5px;">
+                                            <form action="">
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <label for="area">区县:</label>
+                                                        <select class="js-example-basic-single" id="sel_area" name="area" style="width: 100px;">
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="consname">用户名称:</label>
+                                                        <select class="js-example-basic-multiple" name="sel_consname" multiple="multiple" id="sel_consname" style="width: 240px">
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="consno">用户编号:</label>
+                                                        <select class="js-example-basic-multiple" name="sel_consno" multiple="multiple" id="sel_consno" style="width: 260px;">
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input type="button" value="查询" name="btn_query" id="btn_query" style="width: 80px">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div id="table">
+                                            <table id="example" class="display" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>用户编号</th>
+                                                        <th>日期</th>
+                                                        <th>用户名</th>
+                                                        <th>区县</th>
+                                                        <th>总电量</th>
+                                                        <th>尖电量</th>
+                                                        <th>峰电量</th>
+                                                        <th>平电量</th>
+                                                        <th>谷电量</th>
+                                                        <th>反电量</th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>用户编号</th>
+                                                        <th>日期</th>
+                                                        <th>用户名</th>
+                                                        <th>区县</th>
+                                                        <th>总电量</th>
+                                                        <th>尖电量</th>
+                                                        <th>峰电量</th>
+                                                        <th>平电量</th>
+                                                        <th>谷电量</th>
+                                                        <th>反电量</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="crawl" role="tabpanel">
+                                    <div class="p-20">
+                                        <iframe src="/chart" frameborder="0" style="width: 100%;height: 1200px;"></iframe>
+                                    </div>
+                                </div>
+                                <div class="tab-pane p-20" id="cookies" role="tabpanel">3</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+            </div>
+            <script src="static/js/jquery-1.12.4.min.js"></script>
+            <script src="static/js/bootstrap.min.js"></script>
+            <script src="static/js/jquery.dataTables-v1.10.16.min.js" charset="utf8"></script>
+            <script src="static/js/dataTables.buttons-v1.5.1.min.js" charset="utf8"></script>
+            <script src="static/js/pdfmake-v0.1.32.min.js" charset="utf8"></script>
+            <script src="static/js/vfs_fonts-v0.1.32.js" charset="utf8"></script>
+            <script src="static/js/jszip-v2.5.0.min.js" charset="utf8"></script>
+            <script src="static/js/buttons.colVis-v1.5.1.min.js" charset="utf8"></script>
+            <script src="static/js/buttons.flash-v1.5.1.min.js" charset="utf8"></script>
+            <script src="static/js/buttons.html5-v1.5.1.min.js" charset="utf8"></script>
+            <script src="static/js/buttons.print-v1.5.1.min.js" charset="utf8"></script>
+            <script src="static/js/select2.full.min.js"></script>
+            <script src="static/js/select2zh-CN.js"></script>
+            <script>
+            // $(document).ready(function() {
+            //     $.ajax({
+            //             url: '/get_data',
+            //             type: 'GET',
+            //         })
+            //         .done(function(result, status, xhr) {
+            //             $('#example').DataTable({
+            //                 "ajax": result
+            //             });
+            //         });
+            // });
+            $(document).ready(function() {
+                table = $('#example').DataTable({
+                    //显示正在加载
+                    "processing": true,
+                    //服务器处理
+                    "serverSide": true,
+                    //开启分页
+                    "paging": true,
+                    //分页样式
+                    "pagingType": "full_numbers",
+                    //自定义分页长度
+                    "lengthMenu": [
+                        [10, 20, 50, 100, 9999999],
+                        ['10', '20', '50', '100', '全部']
+                    ],
+                    //开启排序
+                    "ordering": true,
+                    //异步请求数据
+                    "ajax": {
+                        "type": "Post",
+                        "url": "/get_data",
+                        //"dataType": "json"
+                        "data": function(d) {
+                            d.test = "myValue";
+                            // d.custom = $('#myInput').val();
+                            // etc
+                        }
+                    },
+                    //列对应关系
+                    "columns": [
+                        { "data": "consno" },
+                        { "data": "datadate" },
+                        { "data": "consnamefull" },
+                        { "data": "consarea" },
+                        { "data": "pape" },
+                        { "data": "pape1" },
+                        { "data": "pape2" },
+                        { "data": "pape3" },
+                        { "data": "pape4" },
+                        { "data": "papr" }
+                    ],
+                    //国际化
+                    "language": {
+                        "sProcessing": "加载中...",
+                        "sLengthMenu": "每页显示 _MENU_ 项",
+                        "sZeroRecords": "没有匹配结果",
+                        "sInfo": "显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项",
+                        "sInfoEmpty": "显示第 0 至 0 项，共 0 项",
+                        "sInfoFiltered": "(由 _MAX_ 项过滤)",
+                        "sInfoPostFix": "",
+                        "sSearch": "搜索:",
+                        "sUrl": "",
+                        "sEmptyTable": "表中数据为空",
+                        "sLoadingRecords": "载入中...",
+                        "sInfoThousands": ",",
+                        "oPaginate": {
+                            "sFirst": "首页",
+                            "sPrevious": "上页",
+                            "sNext": "下页",
+                            "sLast": "末页"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": 以升序排列此列",
+                            "sSortDescending": ": 以降序排列此列"
+                        }
+                    },
+                    dom: 'lfBtip',
+                    buttons: [{
+                            extend: 'copy',
+                            text: '复制',
+                            exportOptions: {
+                                modifier: {
+                                    order: 'current',
+                                    page: 'all'
+                                }
+                            }
+                        },
+                        {
+                            extend: 'excel',
+                            text: '导出excel',
+                            exportOptions: {
+                                modifier: {
+                                    order: 'current',
+                                    page: 'all'
+                                }
+                            }
+                        },
+                        {
+                            extend: 'pdf',
+                            text: '导出pdf',
+                            exportOptions: {
+                                modifier: {
+                                    order: 'current',
+                                    page: 'all'
+                                }
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            text: '打印',
+                            exportOptions: {
+                                modifier: {
+                                    order: 'current',
+                                    page: 'all'
+                                }
+                            }
+                        }
+                    ]
+                });
+
+
+                var sel_area = $('#sel_area').select2({
+                    placeholder: '区县',
+                    ajax: {
+                        url: '/api/area_sel',
+                        dataType: 'json',
+                        processResults: function(data) {
+                            // data[0].selected = true
+                            return {
+                                results: data
+                            };
+                        }
+                    }
+                });
+                // sel_area.val('1').trigger('change');
+                $('#sel_consname').select2({
+                    placeholder: '用户名称(可多选)'
+                });
+                $('#sel_consno').select2({
+                    placeholder: '用户编号(可多选)'
+                });
+                $('#sel_area').on('select2:select', function(e) {
+                    var p_data = e.params.data;
+                    console.log(p_data);
+                    $('#sel_consname').select2({
+                        placeholder: '用户名称(可多选)',
+                        ajax: {
+                            url: '/api/consname_sel',
+                            type: 'post',
+                            dataType: 'json',
+                            data: {
+                                'area': p_data['text']
+                            },
+                            processResults: function(data) {
+                                // data[0].selected = true
+                                return {
+                                    results: data
+                                };
+                            }
+                        }
+                    });
+                });
+                $('#sel_consname').on('select2:select', function(e) {
+                    // var p_data = e.params.data;
+                    var p_data = $('#sel_consname').select2('data');
+                    name_list = []
+                    for (i = 0; i < p_data.length; i++) {
+                        name_list[i] = p_data[i].text
+                    }
+                    name_para = JSON.stringify(name_list)
+                    // console.log(p_data)
+                    console.log(name_list);
+                    $('#sel_consno').select2({
+                        placeholder: '用户编号(可多选)',
+                        ajax: {
+                            url: '/api/consno_sel',
+                            type: 'post',
+                            dataType: 'json',
+                            data: {
+                                'name': name_para
+                            },
+                            processResults: function(data) {
+                                // data[0].selected = true
+                                console.log(data);
+                                return {
+                                    results: data
+                                };
+                            }
+                        }
+                    });
+                });
+                $('#btn_query').click(function() {
+                    /* Act on the event */
+                    var area = $('#sel_area').select2('data');
+                    var name = $('#sel_consname').select2('data');
+                    var no = $('#sel_consno').select2('data');
+                    console.log(area);
+                    console.log(name);
+                    console.log(no);
+
+                    if (area.length == 0) {
+                        alert('请选择查询条件！');
+                        return
+                    }
+                    p_area = area[0].text;
+                    p_name = [];
+                    for (i = 0; i < name.length; i++) {
+                        p_name[i] = name[i].text;
+                    }
+                    p_no = [];
+                    for (i = 0; i < no.length; i++) {
+                        p_no[i] = no[i].text;
+                    }
+                    console.log(p_area);
+                    console.log(p_name);
+                    console.log(p_no);
+
+
+                    table.destroy()
+
+                    table = $('#example').DataTable({
+                        //显示正在加载
+                        "processing": true,
+                        //服务器处理
+                        "serverSide": true,
+                        //开启分页
+                        "paging": true,
+                        //分页样式
+                        "pagingType": "full_numbers",
+                        //自定义分页长度
+                        "lengthMenu": [
+                            [10, 20, 50, 100, 9999999],
+                            ['10', '20', '50', '100', '全部']
+                        ],
+                        //开启排序
+                        "ordering": true,
+                        //异步请求数据
+                        "ajax": {
+                            "type": "Post",
+                            "url": "/api/query",
+                            //"dataType": "json"
+                            "data": function(d) {
+                                // d.test = "myValue";
+                                // d.custom = $('#myInput').val();
+                                // etc
+                                d.area = JSON.stringify(p_area);
+                                d.name = JSON.stringify(p_name);
+                                d.no = JSON.stringify(p_no);
+                            }
+                        },
+                        //列对应关系
+                        "columns": [
+                            { "data": "consno" },
+                            { "data": "datadate" },
+                            { "data": "consnamefull" },
+                            { "data": "consarea" },
+                            { "data": "pape" },
+                            { "data": "pape1" },
+                            { "data": "pape2" },
+                            { "data": "pape3" },
+                            { "data": "pape4" },
+                            { "data": "papr" }
+                        ],
+                        //国际化
+                        "language": {
+                            "sProcessing": "加载中...",
+                            "sLengthMenu": "每页显示 _MENU_ 项",
+                            "sZeroRecords": "没有匹配结果",
+                            "sInfo": "显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项",
+                            "sInfoEmpty": "显示第 0 至 0 项，共 0 项",
+                            "sInfoFiltered": "(由 _MAX_ 项过滤)",
+                            "sInfoPostFix": "",
+                            "sSearch": "搜索:",
+                            "sUrl": "",
+                            "sEmptyTable": "表中数据为空",
+                            "sLoadingRecords": "载入中...",
+                            "sInfoThousands": ",",
+                            "oPaginate": {
+                                "sFirst": "首页",
+                                "sPrevious": "上页",
+                                "sNext": "下页",
+                                "sLast": "末页"
+                            },
+                            "oAria": {
+                                "sSortAscending": ": 以升序排列此列",
+                                "sSortDescending": ": 以降序排列此列"
+                            }
+                        },
+                        dom: 'lfBtip',
+                        buttons: [{
+                                extend: 'copy',
+                                text: '复制',
+                                exportOptions: {
+                                    modifier: {
+                                        order: 'current',
+                                        page: 'all'
+                                    }
+                                }
+                            },
+                            {
+                                extend: 'excel',
+                                text: '导出excel',
+                                exportOptions: {
+                                    modifier: {
+                                        order: 'current',
+                                        page: 'all'
+                                    }
+                                }
+                            },
+                            {
+                                extend: 'pdf',
+                                text: '导出pdf',
+                                exportOptions: {
+                                    modifier: {
+                                        order: 'current',
+                                        page: 'all'
+                                    }
+                                }
+                            },
+                            {
+                                extend: 'print',
+                                text: '打印',
+                                exportOptions: {
+                                    modifier: {
+                                        order: 'current',
+                                        page: 'all'
+                                    }
+                                }
+                            }
+                            // 'copy', 
+                            // 'excel', 'pdf', 'print'
+                        ]
+                        // "dom": "Bfrtip"
+                        // "buttons": [
+                        //     'copy', 'excel', 'pdf'
+                        // ]
+                    });
+
+
+                });
+
+
+
+
+
+                // var table = $('#example').DataTable();
+
+                // Apply the filter
+                // table.columns().every(function() {
+                //     var column = this;
+
+                //     $('input').on('keyup change', function() {
+                //         column
+                //             .search(this.value)
+                //             .draw();
+                //     });
+                // });
+                // $('input').on('keyup', function() {
+                //     table
+                //         .columns(2)
+                //         .search(this.value)
+                //         .draw();
+                // });
+
+                //     $('#example').DataTable({
+                //     dom: 'Bfrtip',
+                //     buttons: [
+                //         'copy', 'csv', 'excel', 'pdf', 'print'
+                //     ]
+                // });
+                // $('#example').DataTable({
+                //     dom: 'Bfrtip',
+                //     buttons: [{
+                //         extend: 'excel',
+                //         exportOptions: {
+                //             columns: [0, 1, 2, 4]
+                //         }
+                //     }, ]
+                // });
+            });
+            </script>
+</body>
+
+</html>

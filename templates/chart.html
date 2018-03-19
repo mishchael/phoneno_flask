@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html style="padding-top: 0;">
+
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <link rel="stylesheet" href="static/css/minimal.css">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/colors/blue.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="static/css/font-awesome/4.1.0/css/font-awesome.min.css">
+    <script src="static/js/jquery-1.12.4.min.js"></script>
+    <script src="static/js/minimal.min.js"></script>
+    <!-- <script src="static/js/bootstrap-dropdown-multilevel.js"></script> -->
+    <script src="static/js/echarts.min.js"></script>
+    <script src="static/js/theme/walden.js"></script>
+    <script src="static/js/theme/vintage.js"></script>
+    <script src="static/js/theme/macarons.js"></script>
+    <script src="static/js/theme/wonderland.js"></script>
+    <script src="static/js/bootstrap-select.min.js"></script>
+    <script src="static/js/defaults-zh_CN.js"></script>
+
+    <script type="text/javascript" src="static/js/vendor/mmenu/js/jquery.mmenu.min.js"></script>
+    <script type="text/javascript" src="static/js/vendor/sparkline/jquery.sparkline.min.js"></script>
+    <script type="text/javascript" src="static/js/vendor/nicescroll/jquery.nicescroll.min.js"></script>
+    <!-- <script type="text/javascript" src="static/js/vendor/animate-numbers/jquery.animateNumbers.js"></script> -->
+    <!-- <script type="text/javascript" src="static/js/vendor/videobackground/jquery.videobackground.js"></script> -->
+    <!-- <script type="text/javascript" src="static/js/vendor/blockui/jquery.blockUI.js"></script> -->
+
+    <!-- <script src="static/js/vendor/flot/jquery.flot.min.js"></script> -->
+    <!-- <script src="static/js/vendor/flot/jquery.flot.categories.min.js"></script> -->
+    <!-- <script src="static/js/vendor/flot/jquery.flot.pie.min.js"></script> -->
+    <!-- <script src="static/js/vendor/flot/jquery.flot.stack.min.js"></script> -->
+    <!-- <script src="static/js/vendor/graphtable/jquery.graphTable-0.3.js"></script> -->
+    <!-- <script src="static/js/vendor/flot/jquery.flot.tooltip.min.js"></script> -->
+
+    <!-- <script src="static/js/vendor/rickshaw/raphael-min.js"></script>  -->
+    <!-- <script src="static/js/vendor/rickshaw/d3.v2.js"></script> -->
+    <!-- <script src="static/js/vendor/rickshaw/rickshaw.min.js"></script> -->
+
+    <!-- <script src="static/js/vendor/morris/morris.min.js"></script> -->
+
+    <!-- <script src="static/js/vendor/easypiechart/jquery.easypiechart.min.js"></script> -->
+
+    <!-- <script src="static/js/vendor/justgage/justgage.js"></script> -->
+</head>
+
+<body class="card-no-border logo-center" style="background-color: rgb(238, 245, 249);">
+    <div id="main-wrapper">
+        <div class="row page-titles">
+            <div class="col-md-12 align-self-center">
+                <h3 class="text-themecolor">机械铸造企业日用电量动态可视化</h3>
+            </div>
+            <!-- <div class="col-md-7 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item">Charts</li>
+                        <li class="breadcrumb-item active">eCharts</li>
+                    </ol>
+                </div> -->
+            <!-- <div class="">
+                    <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
+                </div> -->
+        </div>
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <!-- column -->
+                <div class="col-lg-12">
+                    <section class="tile card">
+                        <!-- tile header -->
+                        <div class="tile-header card-body">
+                            <h2 class="card-title">区县总、尖、峰、平、谷电量</h2>
+                            <div class="controls">
+                                <a href="#" class="minimize"><i class="fa fa-chevron-down"></i></a>
+                                <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
+                                <a href="#" class="remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+                        <!-- /tile header -->
+                        <!-- tile body -->
+                        <div class="tile-body card-body">
+                            <div id="bar-chart" style="height: 400px;"></div>
+                        </div>
+                        <!-- /tile body -->
+                    </section>
+                </div>
+                <div class="col-lg-12">
+                    <section class="tile card">
+                        <!-- tile header -->
+                        <div class="tile-header card-body">
+                            <h2 class="card-title">用户0180825628每日用电量</h2>
+                            <div class="controls">
+                                <a href="#" class="minimize"><i class="fa fa-chevron-down"></i></a>
+                                <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
+                                <a href="#" class="remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+                        <!-- /tile header -->
+                        <!-- tile body -->
+                        <div class="tile-body card-body">
+                            <div id="cal-effectcsatter-chart" style="height: 400px;"></div>
+                        </div>
+                        <!-- /tile body -->
+                    </section>
+                </div>
+                <div class="col-lg-12">
+                    <section class="tile card">
+                        <!-- tile header -->
+                        <div class="tile-header card-body">
+                            <h2 class="card-title">日照市机械铸造企业目录</h2>
+                            <div class="controls">
+                                <a href="#" class="minimize"><i class="fa fa-chevron-down"></i></a>
+                                <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
+                                <a href="#" class="remove"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+                        <!-- /tile header -->
+                        <!-- tile body -->
+                        <div class="tile-body card-body">
+                            <div id="tree-chart" style="height: 800px;"></div>
+                        </div>
+                        <!-- /tile body -->
+                    </section>
+                </div>
+                
+            </div>
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Right sidebar -->
+            <!-- ============================================================== -->
+            <!-- .right-sidebar -->
+            <!-- <div class="right-sidebar">
+                    <div class="slimscrollright">
+                        <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span> </div>
+                        <div class="r-panel-body">
+                            <ul id="themecolors" class="m-t-20">
+                                <li><b>With Light sidebar</b></li>
+                                <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
+                                <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
+                                <li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
+                                <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a></li>
+                                <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
+                                <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
+                                <li class="d-block m-t-30"><b>With Dark sidebar</b></li>
+                                <li><a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme">7</a></li>
+                                <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a></li>
+                                <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a></li>
+                                <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a></li>
+                                <li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a></li>
+                                <li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a></li>
+                            </ul>
+                            <ul class="m-t-20 chatonline">
+                                <li><b>Chat option</b></li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/1.jpg" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/2.jpg" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/3.jpg" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/4.jpg" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/5.jpg" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/6.jpg" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/7.jpg" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/8.jpg" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div> -->
+            <!-- ============================================================== -->
+            <!-- End Right sidebar -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        
+        <!-- <footer class="footer" style="position: absolute;background-color: rgb(238, 245, 249);">
+            © 2018 动态可视化 by 运监中心
+        </footer> -->
+    </div>
+    <!-- <div id="bar" style="width:100%;height:400px;"></div> -->
+    <!-- <div id="calendar_effectscatter" style="width:100%;height:400px;"></div> -->
+    <!-- <div id="tree" style="width:100%;height:800px;"></div> -->
+    <script type="text/javascript">
+    $.get('/chart_bar_data', function(data) {
+        /*optional stuff to do after success */
+        var dom_bar = $('#bar-chart').get(0)
+        var echarts_bar = echarts.init(dom_bar, 'walden')
+        option = {
+            title: {
+                // text: '区县总、尖、峰、平、谷电量',
+                subtext: '柱状图和折线图'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['总电量', '尖电量', '峰电量', '平电量', '谷电量']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataView: { show: true, readOnly: false },
+                    magicType: { show: true, type: ['line', 'bar'] },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            calculable: true,
+            xAxis: [{
+                type: 'category',
+                data: data.area
+            }],
+            yAxis: [{
+                type: 'value'
+            }],
+            series: [{
+                    name: '总电量',
+                    type: 'bar',
+                    data: data.pape,
+                    markPoint: {
+                        data: [
+                            { type: 'max', name: '最大值' },
+                            { type: 'min', name: '最小值' }
+                        ]
+                    },
+                    markLine: {
+                        data: [
+                            { type: 'average', name: '平均值' }
+                        ]
+                    }
+                },
+                {
+                    name: '尖电量',
+                    type: 'bar',
+                    data: data.pape1,
+                    markPoint: {
+                        data: [
+                            { type: 'max', name: '最大值' },
+                            { type: 'min', name: '最小值' }
+                        ]
+                    },
+                    markLine: {
+                        data: [
+                            { type: 'average', name: '平均值' }
+                        ]
+                    }
+                },
+                {
+                    name: '峰电量',
+                    type: 'bar',
+                    data: data.pape2,
+                    markPoint: {
+                        data: [
+                            { type: 'max', name: '最大值' },
+                            { type: 'min', name: '最小值' }
+                        ]
+                    },
+                    markLine: {
+                        data: [
+                            { type: 'average', name: '平均值' }
+                        ]
+                    }
+                },
+                {
+                    name: '平电量',
+                    type: 'bar',
+                    data: data.pape3,
+                    markPoint: {
+                        data: [
+                            { type: 'max', name: '最大值' },
+                            { type: 'min', name: '最小值' }
+                        ]
+                    },
+                    markLine: {
+                        data: [
+                            { type: 'average', name: '平均值' }
+                        ]
+                    }
+                },
+                {
+                    name: '谷电量',
+                    type: 'bar',
+                    data: data.pape4,
+                    markPoint: {
+                        data: [
+                            { type: 'max', name: '最大值' },
+                            { type: 'min', name: '最小值' }
+                        ]
+                    },
+                    markLine: {
+                        data: [
+                            { type: 'average', name: '平均值' }
+                        ]
+                    }
+                }
+            ]
+        };
+        echarts_bar.setOption(option);
+
+    });
+
+    $.get('/chart_cal_effectscatter_data', function(data) {
+        /*optional stuff to do after success */
+        var dom_cal_effectscatter = $('#cal-effectcsatter-chart').get(0)
+        echarts_cal_effectscatter = echarts.init(dom_cal_effectscatter, 'walden')
+
+        option = {
+            // backgroundColor: '#404a59',
+            backgroundColor: '#fff',
+
+            title: {
+                // top: 20,
+                // text: '用户0180825628每日用电量',
+                subtext: '日历特效散点图',
+                // left: 'center',
+                textStyle: {
+                    //color: '#fff'
+                    color: '#666666'
+                }
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                top: '30',
+                left: '100',
+                data: ['日电量', 'Top 10'],
+                textStyle: {
+                    //color: '#fff'
+                    color: '#4f5778'
+                }
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataView: { show: true, readOnly: false },
+                    //magicType: { show: true, type: ['line', 'bar'] },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            calendar: [{
+                    top: 100,
+                    left: 'center',
+                    range: ['2018-01-01', '2018-3-31'],
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#000',
+                            width: 4,
+                            type: 'solid'
+                        }
+                    },
+                    yearLabel: {
+                        formatter: '2018年',
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    },
+                    // yearLabel: {
+                    //     margin: 40
+                    // },
+                    monthLabel: {
+                        nameMap: 'cn',
+                        margin: 10
+                    },
+                    dayLabel: {
+                        firstDay: 7,
+                        nameMap: 'cn',
+                        margin: 10
+                    },
+                    cellSize: 40,
+                    itemStyle: {
+                        normal: {
+                            //color: '#323c48',
+                            color: '#404a59',
+                            borderWidth: 1,
+                            borderColor: '#111'
+                        }
+                    }
+                }
+                // , {
+                //     top: 340,
+                //     left: 'center',
+                //     range: ['2016-07-01', '2016-12-31'],
+                //     splitLine: {
+                //         show: true,
+                //         lineStyle: {
+                //             color: '#000',
+                //             width: 4,
+                //             type: 'solid'
+                //         }
+                //     },
+                //     yearLabel: {
+                //         formatter: '{start}  2nd',
+                //         textStyle: {
+                //             color: '#fff'
+                //         }
+                //     },
+                //     itemStyle: {
+                //         normal: {
+                //             color: '#323c48',
+                //             borderWidth: 1,
+                //             borderColor: '#111'
+                //         }
+                //     }
+                // }
+            ],
+            series: [{
+                    name: '日电量',
+                    type: 'scatter',
+                    coordinateSystem: 'calendar',
+                    data: data,
+                    symbolSize: function(val) {
+                        return val[1] / 80;
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#ddb926'
+                        }
+                    }
+                },
+                // {
+                //     name: '步数',
+                //     type: 'scatter',
+                //     coordinateSystem: 'calendar',
+                //     calendarIndex: 1,
+                //     data: data,
+                //     symbolSize: function(val) {
+                //         return val[1] / 500;
+                //     },
+                //     itemStyle: {
+                //         normal: {
+                //             color: '#ddb926'
+                //         }
+                //     }
+                // },
+                {
+                    name: 'Top 10',
+                    type: 'effectScatter',
+                    coordinateSystem: 'calendar',
+                    //calendarIndex: 1,
+                    data: data.sort(function(a, b) {
+                        return b[1] - a[1];
+                    }).slice(0, 10),
+                    symbolSize: function(val) {
+                        return val[1] / 80;
+                    },
+                    showEffectOn: 'render',
+                    rippleEffect: {
+                        brushType: 'stroke'
+                    },
+                    hoverAnimation: true,
+                    itemStyle: {
+                        normal: {
+                            color: '#f4e925',
+                            shadowBlur: 10,
+                            shadowColor: '#333'
+                        }
+                    },
+                    zlevel: 1
+                }
+                // ,{
+                //     name: 'Top 12',
+                //     type: 'effectScatter',
+                //     coordinateSystem: 'calendar',
+                //     data: data.sort(function(a, b) {
+                //         return b[1] - a[1];
+                //     }).slice(0, 12),
+                //     symbolSize: function(val) {
+                //         return val[1] / 500;
+                //     },
+                //     showEffectOn: 'render',
+                //     rippleEffect: {
+                //         brushType: 'stroke'
+                //     },
+                //     hoverAnimation: true,
+                //     itemStyle: {
+                //         normal: {
+                //             color: '#f4e925',
+                //             shadowBlur: 10,
+                //             shadowColor: '#333'
+                //         }
+                //     },
+                //     zlevel: 1
+                // }
+            ]
+        };
+
+        echarts_cal_effectscatter.setOption(option);
+    });
+    $.get('/chart_tree_data', function(data) {
+        /*optional stuff to do after success */
+        var dom_tree = $('#tree-chart').get(0);
+        echarts_tree = echarts.init(dom_tree);
+        echarts_tree.showLoading();
+        echarts_tree.hideLoading();
+        echarts.util.each(data.children, function(datum, index) {
+            index % 2 === 0 && (datum.collapsed = true);
+        });
+        var option = {
+            title: {
+                top: 20,
+                // text: '日照市机械铸造企业目录',
+                subtext: '树形图',
+                //left: 'center',
+                textStyle: {
+                    //color: '#fff'
+                    color: '#666666'
+                }
+            },
+            tooltip: {
+                trigger: 'item',
+                triggerOn: 'mousemove'
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataView: { show: true, readOnly: false },
+                    //magicType: { show: true, type: ['line', 'bar'] },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            series: [{
+                type: 'tree',
+
+                data: [data],
+
+                top: '1%',
+                left: '7%',
+                bottom: '1%',
+                right: '20%',
+
+                symbolSize: 7,
+
+                label: {
+                    normal: {
+                        position: 'left',
+                        verticalAlign: 'middle',
+                        align: 'right',
+                        fontSize: 9
+                    }
+                },
+
+                leaves: {
+                    label: {
+                        normal: {
+                            position: 'right',
+                            verticalAlign: 'middle',
+                            align: 'left'
+                        }
+                    }
+                },
+
+                expandAndCollapse: true,
+                animationDuration: 550,
+                animationDurationUpdate: 750
+            }]
+        };
+        echarts_tree.setOption(option);
+    });
+    </script>
+</body>
+
+</html>

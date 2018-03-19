@@ -1,0 +1,6 @@
+# Netscape HTTP Cookie File
+# http://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file!  Do not edit.
+
+10.158.242.100	FALSE	/	FALSE	1551532264	JSESSIONID	6gsZcIFx4y_fw6IXvGhZq8ZUqLinyJ_nJzRdWoLnIhr10RBuWfif!-1493141071
+10.158.242.100	FALSE	/	FALSE	1551532264	BIGipServermis	837983754.27458.0000
